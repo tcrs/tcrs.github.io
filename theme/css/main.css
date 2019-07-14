@@ -26,11 +26,19 @@ time, mark, audio, video {
     font: inherit;
     vertical-align: baseline;
 }
+
+body {
+	border-top: 6px solid #55d;
+}
+
 em {
     font-style: italic;
 }
 strong {
     font-weight: bold;
+}
+hr {
+	border-top: 1px solid #ddd;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -65,7 +73,7 @@ body {
 
 header, #wrapper {
     padding: 0 10px;
-    max-width: 910px;
+    max-width: 1024px;
     margin: auto;
 }
 
@@ -241,32 +249,18 @@ form.inline_edit {
     text-align: right;
 }
 
-nav ul {
-    float: right;
-    list-style: none;
-    margin: 0 0 0 3em;
-    padding: 0;
+nav > a {
+	color: #555;
+	font-family: sans-serif;
 }
-nav li {
-    float: left;
-}
-nav a {
-    display: block;
-    padding: 3.5em 10px 10px 10px;
-}
-nav a:hover {
-    background-color: #d3d3d3;
-    color: #FFF;
-}
-nav li.selected a {
-    background-color: #15A9DB;
-    color: #FFF;
+
+nav > a.selected {
+	color: #55d;
 }
 
 header .header_box {
-    padding-top: 2.5em;
-    padding-bottom: 1.5em;
-	border-bottom: solid 1px;
+    padding-top: 2ex;
+    padding-bottom: 1ex;
 }
 header h1 {
     font-size: 1.5em;
