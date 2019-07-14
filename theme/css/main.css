@@ -314,6 +314,10 @@ header h2 {
     text-align: center;
 }
 
+div.page li {
+	margin: 0 0 1ex 0;
+}
+
 code {
     background-color: #F9F2F4;
     border-bottom-left-radius: 4px;
