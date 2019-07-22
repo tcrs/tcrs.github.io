@@ -23,7 +23,7 @@ time, mark, audio, video {
     padding: 0;
     border: 0;
     font-size: 100%;
-    font: inherit;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Fira Sans", sans-serif;
     vertical-align: baseline;
 }
 
@@ -65,8 +65,6 @@ table {
 }
 
 body {
-    font-family: Georgia, serif;
-    font-size: 16px;
     line-height: 1.5em;
     color: #444;
 }
@@ -91,7 +89,6 @@ ol {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: sans-serif;
     font-weight: bold;
 }
 h1, h2, h3 {
@@ -133,7 +130,6 @@ thead {
 
 .info {
     margin-top: 1.3em;
-    font-family: sans-serif;
     text-align: right;
     color: #BBB;
 }
@@ -247,7 +243,6 @@ form.inline_edit {
 
 nav > a {
 	color: #555;
-	font-family: sans-serif;
 }
 
 nav > a.selected {
@@ -274,7 +269,6 @@ header h2 {
 }
 
 .pages {
-    font-family: sans-serif;
     line-height: 2.5em;
     margin: 4.5em 0 3em;
     background-color: #F9F9F9;
@@ -333,7 +327,6 @@ code {
 }
 
 footer {
-    font-family: sans-serif;
     line-height: 2.5em;
     text-align: center;
     color: #BBB;
