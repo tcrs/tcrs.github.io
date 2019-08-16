@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Not/Empty | Building a custom keyboard</title>
+    <link rel="shortcut icon" type="image/png" href="https://thomas.spurden.name/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="https://thomas.spurden.name/favicon.ico">
+    <link href="https://thomas.spurden.name/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Not/Empty Full Atom Feed" />
+    <link rel="stylesheet" href="https://thomas.spurden.name/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="https://thomas.spurden.name/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Thomas Spurden" />
+
+</head>
+<body>
+    <header>
+        <div class="header_box">
+            <h1>Not/Empty
+<span class="subtitle"> | <a href="https://thomas.spurden.name/building-a-custom-keyboard.html" rel="bookmark" title="Permanent link to &quot;Building a custom keyboard&quot;">Building a custom keyboard</a></span>			</h1>
+        </div>
+        <nav>
+				&middot;
+                <a  href="https://thomas.spurden.name/">Home</a> &middot;
+                <a  href="https://thomas.spurden.name/projects/">Projects</a> &middot;
+                <a href="https://thomas.spurden.name/feeds/all.atom.xml" rel="alternate">Atom</a> &middot;
+                <a href="https://github.com/tcrs">GitHub</a> &middot;
+                <a href="https://git.sr.ht/~shiny">sr.ht</a> &middot;
+                <a href="https://bitbucket.com/tcrs">BitBucket</a> &middot;
+        </nav>
+    </header>
+	<hr>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 18, 2019</h4>
+
+            <article class="post">
+
+                
+                
+
+                <p>I made a custom keyboard design, the <a class="reference external" href="https://github.com/tcrs/ergosnap">ErgoSnap</a>.</p>
+<img alt="Final constructed ErgoSnap rev1.1 board" src="https://thomas.spurden.name/images/ergosnap_v1.1.jpg" />
+<div class="section" id="backstory">
+<h2>Backstory</h2>
+<p>A while ago I built an <a class="reference external" href="https://keeb.io/products/iris-keyboard-split-ergonomic-keyboard">Iris keyboard</a> from a kit because I wanted to try a
+split layout. I'm pretty happy with it but after using it for a few months
+decided I would like a few more keys. I had a look at what else was available,
+and after spending a lot of time on the internet decided that the layout of the
+<a class="reference external" href="https://github.com/omkbd/ErgoDash">ErgoDash</a> looked good. I liked the construction of the <a class="reference external" href="https://github.com/reversebias/mitosis-hardware">Mitosis</a> using a single
+PCB design for both the mounting plate and the actual PCB the switches are
+soldered to; however I didn't want a wireless keyboard and wanted to stick with
+the <a class="reference external" href="https://qmk.fm/">QMK</a> firmware. So I decided to adapt the ErgoDash design to use the Mitosis
+construction.</p>
+</div>
+<div class="section" id="construction">
+<h2>Construction</h2>
+<p>Since I was designing my own keyboard I can tailor it to my rquirements:</p>
+<ul class="simple">
+<li>Tenting built in. Just need two M6 mounting holes on the inside edge of the board</li>
+<li>Don't care about any kind of lighting</li>
+</ul>
+<p>I chose to use the diode mounting holes in the keyswitches - these are wider
+than the LED mounting holes (but in the same location on the keyswitch). They
+are in the Cherry MX <a class="reference external" href="http://switches-sensors.zf.com/wp-content/uploads/2012/07/Keymodule_MX_EN.pdf">datasheet</a> (found by searching around on the internet). I'm
+using <a class="reference external" href="https://zealpc.net/products/zealio">Zealios</a> and the ones I've got definitely have the diode holes. This
+simplified routing as the diode overlaps the switch.</p>
+<p>I created a custom component and footprint with the keyswitch, diode and cutouts
+for snapout section (for the mounting plate PCB). Added a chin at the top for
+the ProMicro, used the reversible ProMicro footprint from <a class="reference external" href="https://github.com/Biacco42/Ergo42">Ergo42</a>.</p>
+<p>Ordered PCBs from JLC PCB:</p>
+<img alt="Top view of both halves of the revision 1 ErgoSnap PCB" src="https://thomas.spurden.name/images/keyboard-rev1-top-both.jpg" />
+<img alt="Side view of stacked Rev 1 ErgoSnap PCB with a couple of keyswitches" src="https://thomas.spurden.name/images/keyboard-rev1-side-view.jpg" />
+<p>First set of PCBs arrived and looked good, but...</p>
+<img alt="Closeup of keyswitch and PCB showing misaligned holes for diode legs" src="https://thomas.spurden.name/images/keyboard-rev1-diode-holes.jpg" />
+<p>the holes for the diode legs were not the right distance apart! Whoops. Luckily
+PCBs are pretty cheap so a couple of weeks later I had revised boards. Only a
+few mistakes remain now. See the <a class="reference external" href="https://github.com/tcrs/ergosnap">ErgoSnap</a> github repo for more info.</p>
+</div>
+
+                <div class="clear"></div>
+
+                <div class="info">
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+				<hr>
+                <p>
+				Copyright Thomas Spurden
+                &middot;
+                <a href="https://thomas.spurden.name/feeds/all.atom.xml" rel="alternate">Atom Feed</a>
+				&middot;
+				Powered  by <a href="https://blog.getpelican.com/">Pelican</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

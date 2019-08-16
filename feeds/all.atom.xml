@@ -1,5 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Not/Empty</title><link href="https://thomas.spurden.name/" rel="alternate"></link><link href="https://thomas.spurden.name/feeds/all.atom.xml" rel="self"></link><id>https://thomas.spurden.name/</id><updated>2018-02-28T00:00:00+00:00</updated><entry><title>STM32 Getting Started</title><link href="https://thomas.spurden.name/stm32-getting-started.html" rel="alternate"></link><published>2018-02-28T00:00:00+00:00</published><updated>2018-02-28T00:00:00+00:00</updated><author><name>Thomas Spurden</name></author><id>tag:thomas.spurden.name,2018-02-28:/stm32-getting-started.html</id><summary type="html">&lt;p&gt;See &lt;a href="https://github.com/tcrs/stm-start"&gt;this GitHub repo&lt;/a&gt; for the related code
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Not/Empty</title><link href="https://thomas.spurden.name/" rel="alternate"></link><link href="https://thomas.spurden.name/feeds/all.atom.xml" rel="self"></link><id>https://thomas.spurden.name/</id><updated>2019-07-18T00:00:00+01:00</updated><entry><title>Building a custom keyboard</title><link href="https://thomas.spurden.name/building-a-custom-keyboard.html" rel="alternate"></link><published>2019-07-18T00:00:00+01:00</published><updated>2019-07-18T00:00:00+01:00</updated><author><name>Thomas Spurden</name></author><id>tag:thomas.spurden.name,2019-07-18:/building-a-custom-keyboard.html</id><summary type="html">&lt;p&gt;I made a custom keyboard design, the &lt;a class="reference external" href="https://github.com/tcrs/ergosnap"&gt;ErgoSnap&lt;/a&gt;.&lt;/p&gt;
+&lt;img alt="Final constructed ErgoSnap rev1.1 board" src="https://thomas.spurden.name/images/ergosnap_v1.1.jpg" /&gt;
+&lt;div class="section" id="backstory"&gt;
+&lt;h2&gt;Backstory&lt;/h2&gt;
+&lt;p&gt;A while ago I built an &lt;a class="reference external" href="https://keeb.io/products/iris-keyboard-split-ergonomic-keyboard"&gt;Iris keyboard&lt;/a&gt; from a kit because I wanted to try a
+split layout. I'm pretty happy with it but after using it for a few months
+decided I would like a few more keys. I …&lt;/p&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;I made a custom keyboard design, the &lt;a class="reference external" href="https://github.com/tcrs/ergosnap"&gt;ErgoSnap&lt;/a&gt;.&lt;/p&gt;
+&lt;img alt="Final constructed ErgoSnap rev1.1 board" src="https://thomas.spurden.name/images/ergosnap_v1.1.jpg" /&gt;
+&lt;div class="section" id="backstory"&gt;
+&lt;h2&gt;Backstory&lt;/h2&gt;
+&lt;p&gt;A while ago I built an &lt;a class="reference external" href="https://keeb.io/products/iris-keyboard-split-ergonomic-keyboard"&gt;Iris keyboard&lt;/a&gt; from a kit because I wanted to try a
+split layout. I'm pretty happy with it but after using it for a few months
+decided I would like a few more keys. I had a look at what else was available,
+and after spending a lot of time on the internet decided that the layout of the
+&lt;a class="reference external" href="https://github.com/omkbd/ErgoDash"&gt;ErgoDash&lt;/a&gt; looked good. I liked the construction of the &lt;a class="reference external" href="https://github.com/reversebias/mitosis-hardware"&gt;Mitosis&lt;/a&gt; using a single
+PCB design for both the mounting plate and the actual PCB the switches are
+soldered to; however I didn't want a wireless keyboard and wanted to stick with
+the &lt;a class="reference external" href="https://qmk.fm/"&gt;QMK&lt;/a&gt; firmware. So I decided to adapt the ErgoDash design to use the Mitosis
+construction.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="construction"&gt;
+&lt;h2&gt;Construction&lt;/h2&gt;
+&lt;p&gt;Since I was designing my own keyboard I can tailor it to my rquirements:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Tenting built in. Just need two M6 mounting holes on the inside edge of the board&lt;/li&gt;
+&lt;li&gt;Don't care about any kind of lighting&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I chose to use the diode mounting holes in the keyswitches - these are wider
+than the LED mounting holes (but in the same location on the keyswitch). They
+are in the Cherry MX &lt;a class="reference external" href="http://switches-sensors.zf.com/wp-content/uploads/2012/07/Keymodule_MX_EN.pdf"&gt;datasheet&lt;/a&gt; (found by searching around on the internet). I'm
+using &lt;a class="reference external" href="https://zealpc.net/products/zealio"&gt;Zealios&lt;/a&gt; and the ones I've got definitely have the diode holes. This
+simplified routing as the diode overlaps the switch.&lt;/p&gt;
+&lt;p&gt;I created a custom component and footprint with the keyswitch, diode and cutouts
+for snapout section (for the mounting plate PCB). Added a chin at the top for
+the ProMicro, used the reversible ProMicro footprint from &lt;a class="reference external" href="https://github.com/Biacco42/Ergo42"&gt;Ergo42&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Ordered PCBs from JLC PCB:&lt;/p&gt;
+&lt;img alt="Top view of both halves of the revision 1 ErgoSnap PCB" src="https://thomas.spurden.name/images/keyboard-rev1-top-both.jpg" /&gt;
+&lt;img alt="Side view of stacked Rev 1 ErgoSnap PCB with a couple of keyswitches" src="https://thomas.spurden.name/images/keyboard-rev1-side-view.jpg" /&gt;
+&lt;p&gt;First set of PCBs arrived and looked good, but...&lt;/p&gt;
+&lt;img alt="Closeup of keyswitch and PCB showing misaligned holes for diode legs" src="https://thomas.spurden.name/images/keyboard-rev1-diode-holes.jpg" /&gt;
+&lt;p&gt;the holes for the diode legs were not the right distance apart! Whoops. Luckily
+PCBs are pretty cheap so a couple of weeks later I had revised boards. Only a
+few mistakes remain now. See the &lt;a class="reference external" href="https://github.com/tcrs/ergosnap"&gt;ErgoSnap&lt;/a&gt; github repo for more info.&lt;/p&gt;
+&lt;/div&gt;
+</content></entry><entry><title>STM32 Getting Started</title><link href="https://thomas.spurden.name/stm32-getting-started.html" rel="alternate"></link><published>2018-02-28T00:00:00+00:00</published><updated>2018-02-28T00:00:00+00:00</updated><author><name>Thomas Spurden</name></author><id>tag:thomas.spurden.name,2018-02-28:/stm32-getting-started.html</id><summary type="html">&lt;p&gt;See &lt;a href="https://github.com/tcrs/stm-start"&gt;this GitHub repo&lt;/a&gt; for the related code
 (and a copy of this post).&lt;/p&gt;
 &lt;h1&gt;Getting Started using the STM32 platform&lt;/h1&gt;
 &lt;p&gt;I have an &lt;a href="http://wiki.seeedstudio.com/wiki/Arch_Max"&gt;Arch Max&lt;/a&gt; STM32F4 development board. Although it &lt;a href="https://developer.mbed.org/platforms/Seeed-Arch-Max/"&gt;supports
