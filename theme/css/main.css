@@ -42,8 +42,7 @@ hr {
 }
 
 hr.article-separator {
-	padding: 0;
-	margin: 2px;
+	margin-top: 4em;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -74,7 +73,7 @@ body {
     color: #444;
 }
 
-header, #wrapper {
+header, article, div.page {
     padding: 0 10px;
     max-width: 1024px;
     margin: auto;
@@ -243,6 +242,7 @@ nav > a {
 
 nav > a.selected {
 	color: #55d;
+	font-weight: bold;
 }
 
 header .header_box {
@@ -326,7 +326,7 @@ footer {
     line-height: 2.5em;
     text-align: center;
     color: #BBB;
-    margin: 3em 0;
+    margin: 1ex 0;
 }
 footer p { margin: 0; }
 
@@ -335,23 +335,16 @@ footer p { margin: 0; }
 .clear { clear: both; }
 
 @media screen and (max-width: 1024px) {
-    #wrapper {
+    article, div.page {
         margin-left: 2.6em;
         padding:1em;
     }
 }
 
 @media screen and (max-width: 800px), print {
-    #wrapper {
+    article, div.page {
         margin: 0;
         padding: 1em;
-    }
-    .date {
-        width: 100%;
-        margin: 0 0 .5em 0;
-    }
-    .post {
-        margin: 0 0 4.5em 0;
     }
     .post pre,
     .post code {
@@ -368,7 +361,7 @@ footer p { margin: 0; }
     * {
         background: #fff;
     }
-    #wrapper, #content {
+    article, div.page {
         margin: 0;
         padding: 0;
     }
@@ -388,7 +381,7 @@ footer p { margin: 0; }
     h1, h2 {
         font-size: 14pt;
     }
-    h3, h4, h4.date {
+    h3, h4, h4 {
         font-size: 12pt;
     }
     .post p, .post ul li, .post ol li, .post table {
