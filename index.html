@@ -32,6 +32,39 @@
 	<hr>
             <article class="post">
                 <h2 class="title">
+                    <a href="https://thomas.spurden.name/autologin-and-start-x11.html" rel="bookmark" title="Permanent Link to &quot;Autologin and start X11&quot;">Autologin and start X11</a>
+					<span class="date">Apr 13, 2020</span></h2>
+
+                
+                
+
+                <p>I have full disk encryption enabled and so don't want to have to type my disk
+encryption password and then log in as my user immediately afterwards.</p>
+<p>Install <a href="https://github.com/joukewitteveen/xlogin">xlogin</a></p>
+<p>For Arch Linux it's in the <a href="https://aur.archlinux.org/packages/xlogin/">AUR</a></p>
+<div class="highlight"><pre><span></span><span class="err">systemctl enable xlogin@username</span>
+</pre></div>
+
+
+<p>I found that this would not work, X wouldn't actually start. Examining the logs
+in <code>/var/log/Xorg.0.log</code> (or <code>/var/log/Xorg.0.log.old</code> if you manually start X
+before digging around) I could see that X11 couldn't find any display outputs.
+So I added a kludge: in <code>/etc/systemd/system/x@.service.d/wait.conf</code> (which you
+will need to create):</p>
+<div class="highlight"><pre><span></span><span class="k">[Service]</span>
+<span class="na">ExecStartPre</span><span class="o">=</span><span class="s">/bin/sleep 3</span>
+</pre></div>
+
+
+<p>There's probably a better way to do this - maybe the x service needs some
+dependency it doesn't have? But this has worked fine for me for a long time.</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                </div>
+            </article><hr class="article-separator">
+            <article class="post">
+                <h2 class="title">
                     <a href="https://thomas.spurden.name/building-a-custom-keyboard.html" rel="bookmark" title="Permanent Link to &quot;Building a custom keyboard&quot;">Building a custom keyboard</a>
 					<span class="date">Jul 18, 2019</span></h2>
 
@@ -113,7 +146,7 @@ communicate with the board.</p>
 <h1>GDB</h1>
 <p>Once OpenOCD is running and connected to the board via USB <code>gdb</code> can be
 connected and used to run and debug binaries. </p>
-<div class="highlight"><pre><span></span><span class="n">arm</span><span class="o">-</span><span class="k">none</span><span class="o">-</span><span class="n">eabi</span><span class="o">-</span><span class="n">gdb</span> <span class="o">-</span><span class="n">x</span> <span class="k">load</span><span class="p">.</span><span class="n">gdb</span> <span class="nb">binary</span><span class="p">.</span><span class="n">elf</span>
+<div class="highlight"><pre><span></span><span class="err">arm-none-eabi-gdb -x load.gdb binary.elf</span>
 </pre></div>
 
 

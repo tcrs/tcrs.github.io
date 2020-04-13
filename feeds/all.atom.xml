@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Not/Empty</title><link href="https://thomas.spurden.name/" rel="alternate"></link><link href="https://thomas.spurden.name/feeds/all.atom.xml" rel="self"></link><id>https://thomas.spurden.name/</id><updated>2019-07-18T00:00:00+01:00</updated><entry><title>Building a custom keyboard</title><link href="https://thomas.spurden.name/building-a-custom-keyboard.html" rel="alternate"></link><published>2019-07-18T00:00:00+01:00</published><updated>2019-07-18T00:00:00+01:00</updated><author><name>Thomas Spurden</name></author><id>tag:thomas.spurden.name,2019-07-18:/building-a-custom-keyboard.html</id><summary type="html">&lt;p&gt;I made a custom keyboard design, the &lt;a class="reference external" href="https://github.com/tcrs/ergosnap"&gt;ErgoSnap&lt;/a&gt;.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Not/Empty</title><link href="https://thomas.spurden.name/" rel="alternate"></link><link href="https://thomas.spurden.name/feeds/all.atom.xml" rel="self"></link><id>https://thomas.spurden.name/</id><updated>2020-04-13T00:00:00+01:00</updated><entry><title>Autologin and start X11</title><link href="https://thomas.spurden.name/autologin-and-start-x11.html" rel="alternate"></link><published>2020-04-13T00:00:00+01:00</published><updated>2020-04-13T00:00:00+01:00</updated><author><name>Thomas Spurden</name></author><id>tag:thomas.spurden.name,2020-04-13:/autologin-and-start-x11.html</id><summary type="html">&lt;p&gt;I have full disk encryption enabled and so don't want to have to type my disk
+encryption password and then log in as my user immediately afterwards.&lt;/p&gt;
+&lt;p&gt;Install &lt;a href="https://github.com/joukewitteveen/xlogin"&gt;xlogin&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;For Arch Linux it's in the &lt;a href="https://aur.archlinux.org/packages/xlogin/"&gt;AUR&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;systemctl enable xlogin@username&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I found that this would not work, X wouldn't actually …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I have full disk encryption enabled and so don't want to have to type my disk
+encryption password and then log in as my user immediately afterwards.&lt;/p&gt;
+&lt;p&gt;Install &lt;a href="https://github.com/joukewitteveen/xlogin"&gt;xlogin&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;For Arch Linux it's in the &lt;a href="https://aur.archlinux.org/packages/xlogin/"&gt;AUR&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;systemctl enable xlogin@username&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I found that this would not work, X wouldn't actually start. Examining the logs
+in &lt;code&gt;/var/log/Xorg.0.log&lt;/code&gt; (or &lt;code&gt;/var/log/Xorg.0.log.old&lt;/code&gt; if you manually start X
+before digging around) I could see that X11 couldn't find any display outputs.
+So I added a kludge: in &lt;code&gt;/etc/systemd/system/x@.service.d/wait.conf&lt;/code&gt; (which you
+will need to create):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Service]&lt;/span&gt;
+&lt;span class="na"&gt;ExecStartPre&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/bin/sleep 3&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;There's probably a better way to do this - maybe the x service needs some
+dependency it doesn't have? But this has worked fine for me for a long time.&lt;/p&gt;</content><category term="misc"></category></entry><entry><title>Building a custom keyboard</title><link href="https://thomas.spurden.name/building-a-custom-keyboard.html" rel="alternate"></link><published>2019-07-18T00:00:00+01:00</published><updated>2019-07-18T00:00:00+01:00</updated><author><name>Thomas Spurden</name></author><id>tag:thomas.spurden.name,2019-07-18:/building-a-custom-keyboard.html</id><summary type="html">&lt;p&gt;I made a custom keyboard design, the &lt;a class="reference external" href="https://github.com/tcrs/ergosnap"&gt;ErgoSnap&lt;/a&gt;.&lt;/p&gt;
 &lt;img alt="Final constructed ErgoSnap rev1.1 board" src="https://thomas.spurden.name/images/ergosnap_v1.1.jpg" /&gt;
 &lt;div class="section" id="backstory"&gt;
 &lt;h2&gt;Backstory&lt;/h2&gt;
@@ -43,7 +70,7 @@ the ProMicro, used the reversible ProMicro footprint from &lt;a class="reference
 PCBs are pretty cheap so a couple of weeks later I had revised boards. Only a
 few mistakes remain now. See the &lt;a class="reference external" href="https://github.com/tcrs/ergosnap"&gt;ErgoSnap&lt;/a&gt; github repo for more info.&lt;/p&gt;
 &lt;/div&gt;
-</content></entry><entry><title>STM32 Getting Started</title><link href="https://thomas.spurden.name/stm32-getting-started.html" rel="alternate"></link><published>2018-02-28T00:00:00+00:00</published><updated>2018-02-28T00:00:00+00:00</updated><author><name>Thomas Spurden</name></author><id>tag:thomas.spurden.name,2018-02-28:/stm32-getting-started.html</id><summary type="html">&lt;p&gt;See &lt;a href="https://github.com/tcrs/stm-start"&gt;this GitHub repo&lt;/a&gt; for the related code
+</content><category term="misc"></category></entry><entry><title>STM32 Getting Started</title><link href="https://thomas.spurden.name/stm32-getting-started.html" rel="alternate"></link><published>2018-02-28T00:00:00+00:00</published><updated>2018-02-28T00:00:00+00:00</updated><author><name>Thomas Spurden</name></author><id>tag:thomas.spurden.name,2018-02-28:/stm32-getting-started.html</id><summary type="html">&lt;p&gt;See &lt;a href="https://github.com/tcrs/stm-start"&gt;this GitHub repo&lt;/a&gt; for the related code
 (and a copy of this post).&lt;/p&gt;
 &lt;h1&gt;Getting Started using the STM32 platform&lt;/h1&gt;
 &lt;p&gt;I have an &lt;a href="http://wiki.seeedstudio.com/wiki/Arch_Max"&gt;Arch Max&lt;/a&gt; STM32F4 development board. Although it &lt;a href="https://developer.mbed.org/platforms/Seeed-Arch-Max/"&gt;supports
@@ -72,7 +99,7 @@ communicate with the board.&lt;/p&gt;
 &lt;h1&gt;GDB&lt;/h1&gt;
 &lt;p&gt;Once OpenOCD is running and connected to the board via USB &lt;code&gt;gdb&lt;/code&gt; can be
 connected and used to run and debug binaries. &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;arm&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="k"&gt;none&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;eabi&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;gdb&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="k"&gt;load&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gdb&lt;/span&gt; &lt;span class="nb"&gt;binary&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;elf&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;arm-none-eabi-gdb -x load.gdb binary.elf&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -159,4 +186,4 @@ Max that was in
 &lt;p&gt;&lt;a href="https://sergeev.io/notes/cortex_cmsis/"&gt;Good overview of CMSIS on the LPC devices&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://regalis.com.pl/en/arm-cortex-stm32-gnulinux/"&gt;Very useful tutorial&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://jeremyherbert.net/get/stm32f4_getting_started"&gt;Useful tutorial on making a blinky&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://theanine.io/notes/cortex_cmsis/"&gt;Tutorial not really checked out yet&lt;/a&gt;&lt;/p&gt;</content></entry></feed>
+&lt;p&gt;&lt;a href="http://theanine.io/notes/cortex_cmsis/"&gt;Tutorial not really checked out yet&lt;/a&gt;&lt;/p&gt;</content><category term="misc"></category></entry></feed>
