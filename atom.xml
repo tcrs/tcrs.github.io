@@ -74,8 +74,7 @@ dependency it doesn&#x27;t have? But this has worked fine for me for a long time
 		<updated>2019-07-18T00:00:00+00:00</updated>
 		<link href="https://thomas.spurden.name/blog/custom-keyboard/" type="text/html"/>
 		<id>https://thomas.spurden.name/blog/custom-keyboard/</id>
-		<content type="html">&lt;h1 id=&quot;building-a-custom-keyboard&quot;&gt;Building a Custom Keyboard&lt;&#x2F;h1&gt;
-&lt;p&gt;I made a custom keyboard design, the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;tcrs&#x2F;ergosnap&quot;&gt;ErgoSnap&lt;&#x2F;a&gt;.
+		<content type="html">&lt;p&gt;I made a custom keyboard design, the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;tcrs&#x2F;ergosnap&quot;&gt;ErgoSnap&lt;&#x2F;a&gt;.
 &lt;img src=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;custom-keyboard&#x2F;ergosnap_v1.1.jpg&quot; alt=&quot;Final constructed ErgoSnap rev1.1 board&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;backstory&quot;&gt;Backstory&lt;&#x2F;h2&gt;
 &lt;p&gt;A while ago I built an &lt;a href=&quot;https:&#x2F;&#x2F;keeb.io&#x2F;products&#x2F;iris-keyboard-split-ergonomic-keyboard&quot;&gt;Iris keyboard&lt;&#x2F;a&gt; from a kit because I wanted to try
