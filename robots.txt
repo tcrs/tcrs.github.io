@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://thomas.spurden.name/sitemap.xml

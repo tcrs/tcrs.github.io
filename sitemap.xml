@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://thomas.spurden.name/</loc>
+    </url>
+    <url>
+        <loc>https://thomas.spurden.name/blog/</loc>
+    </url>
+    <url>
+        <loc>https://thomas.spurden.name/blog/autostartx/</loc>
+        <lastmod>2020-04-13</lastmod>
+    </url>
+    <url>
+        <loc>https://thomas.spurden.name/blog/custom-keyboard/</loc>
+        <lastmod>2019-07-18</lastmod>
+    </url>
+    <url>
+        <loc>https://thomas.spurden.name/blog/dhcp-all-ethernet/</loc>
+        <lastmod>2020-07-10</lastmod>
+    </url>
+    <url>
+        <loc>https://thomas.spurden.name/blog/stm-start/</loc>
+        <lastmod>2018-02-28</lastmod>
+    </url>
+</urlset>

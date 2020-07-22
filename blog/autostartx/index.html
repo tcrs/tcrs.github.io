@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Autologin and start X11</title>
+    <link rel="shortcut icon" type="image/png" href="https://thomas.spurden.name/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="https://thomas.spurden.name/favicon.ico">
+    <link rel="stylesheet" href="/default.css">
+
+    <meta name="generator" content="zola" />
+    <meta name="author" content="Thomas Spurden" />
+</head>
+<body>
+    <header>
+        <nav>
+	    <a href="https:&#x2F;&#x2F;thomas.spurden.name/">&#11152; Home</a>
+	    &middot; <a href="https://github.com/tcrs">GitHub</a>
+	    &middot; <a href="https://git.sr.ht/~shiny">sr.ht</a>
+	    &middot; <a href="https://bitbucket.com/tcrs">BitBucket</a>
+	    &middot; <a href="https://thomas.spurden.name/atom.xml">Atom Feed</a>
+	    &middot;
+        </nav>
+    </header>
+	<hr>
+	
+    <article>
+    <h1>Autologin and start X11</h1>
+    <p>I have full disk encryption enabled and so don't want to have to type my disk
+encryption password and then log in as my user immediately afterwards.</p>
+<p>Install <a href="https://github.com/joukewitteveen/xlogin">xlogin</a></p>
+<p>For Arch Linux it's in the <a href="https://aur.archlinux.org/packages/xlogin/">AUR</a></p>
+<pre style="background-color:#fdf6e3;">
+<code>systemctl enable xlogin@username
+</code></pre>
+<p>I found that this would not work, X wouldn't actually start. Examining the logs
+in <code>/var/log/Xorg.0.log</code> (or <code>/var/log/Xorg.0.log.old</code> if you manually start X
+before digging around) I could see that X11 couldn't find any display outputs.
+So I added a kludge: in <code>/etc/systemd/system/x@.service.d/wait.conf</code> (which you
+will need to create):</p>
+<pre style="background-color:#fdf6e3;">
+<code>[Service]
+ExecStartPre=/bin/sleep 3
+</code></pre>
+<p>There's probably a better way to do this - maybe the x service needs some
+dependency it doesn't have? But this has worked fine for me for a long time.</p>
+
+    </article>
+
+	<p><a href="https:&#x2F;&#x2F;thomas.spurden.name/">&#11152; Home</a>
+	<footer>
+		<hr>
+		<p>
+		&#169; Thomas Spurden
+		&middot; <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA &#127341;&#127343;&#127246;</a> &middot;
+		<a href="https://thomas.spurden.name/atom.xml" rel="alternate">Atom Feed</a>
+	</footer>
+</body>
+</html>

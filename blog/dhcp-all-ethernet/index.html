@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Run dhcp on all ethernet devices</title>
+    <link rel="shortcut icon" type="image/png" href="https://thomas.spurden.name/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="https://thomas.spurden.name/favicon.ico">
+    <link rel="stylesheet" href="/default.css">
+
+    <meta name="generator" content="zola" />
+    <meta name="author" content="Thomas Spurden" />
+</head>
+<body>
+    <header>
+        <nav>
+	    <a href="https:&#x2F;&#x2F;thomas.spurden.name/">&#11152; Home</a>
+	    &middot; <a href="https://github.com/tcrs">GitHub</a>
+	    &middot; <a href="https://git.sr.ht/~shiny">sr.ht</a>
+	    &middot; <a href="https://bitbucket.com/tcrs">BitBucket</a>
+	    &middot; <a href="https://thomas.spurden.name/atom.xml">Atom Feed</a>
+	    &middot;
+        </nav>
+    </header>
+	<hr>
+	
+    <article>
+    <h1>Run dhcp on all ethernet devices</h1>
+    <p>My laptop doesn't have a built-in ethernet controller (WiFi only). I want all
+Ethernet devices to be dhcp-ed automatically, as soon as they appear (USB
+tethering phone, USB-to-ethernet adaptor). But I don't want to mess up the
+configuration for my WiFi card.</p>
+<p>Lightly modified <code>/usr/lib/systemd/system/dhcpcd.service</code> (Arch Linux)</p>
+<pre style="background-color:#fdf6e3;">
+<code>[Unit]
+Description=dhcpcd on all en* interfaces
+Wants=network.target
+Before=network.target
+
+[Service]
+Type=forking
+PIDFile=/run/dhcpcd/pid
+# Only allow ethernet devices, ignore unrenamed devices as udev
+# will (try to) rename them whilst dhcpcd is fiddling with them
+ExecStart=/usr/bin/dhcpcd -q -b --allowinterfaces 'en*' --denyinterfaces 'eth*'
+ExecStop=/usr/bin/dhcpcd -x
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>Put this in <code>/etc/systemd/system/dhcpcd-all-en.service</code> and run</p>
+<pre style="background-color:#fdf6e3;">
+<code>systemctl daemon-reload
+systemctl enable --now dhcpcd-all-en
+</code></pre>
+<p>Enjoy!</p>
+
+    </article>
+
+	<p><a href="https:&#x2F;&#x2F;thomas.spurden.name/">&#11152; Home</a>
+	<footer>
+		<hr>
+		<p>
+		&#169; Thomas Spurden
+		&middot; <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA &#127341;&#127343;&#127246;</a> &middot;
+		<a href="https://thomas.spurden.name/atom.xml" rel="alternate">Atom Feed</a>
+	</footer>
+</body>
+</html>

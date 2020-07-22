@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Building a custom keyboard</title>
+    <link rel="shortcut icon" type="image/png" href="https://thomas.spurden.name/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="https://thomas.spurden.name/favicon.ico">
+    <link rel="stylesheet" href="/default.css">
+
+    <meta name="generator" content="zola" />
+    <meta name="author" content="Thomas Spurden" />
+</head>
+<body>
+    <header>
+        <nav>
+	    <a href="https:&#x2F;&#x2F;thomas.spurden.name/">&#11152; Home</a>
+	    &middot; <a href="https://github.com/tcrs">GitHub</a>
+	    &middot; <a href="https://git.sr.ht/~shiny">sr.ht</a>
+	    &middot; <a href="https://bitbucket.com/tcrs">BitBucket</a>
+	    &middot; <a href="https://thomas.spurden.name/atom.xml">Atom Feed</a>
+	    &middot;
+        </nav>
+    </header>
+	<hr>
+	
+    <article>
+    <h1>Building a custom keyboard</h1>
+    <h1 id="building-a-custom-keyboard">Building a Custom Keyboard</h1>
+<p>I made a custom keyboard design, the <a href="https://github.com/tcrs/ergosnap">ErgoSnap</a>.
+<img src="https://thomas.spurden.name/blog/custom-keyboard/ergosnap_v1.1.jpg" alt="Final constructed ErgoSnap rev1.1 board" /></p>
+<h2 id="backstory">Backstory</h2>
+<p>A while ago I built an <a href="https://keeb.io/products/iris-keyboard-split-ergonomic-keyboard">Iris keyboard</a> from a kit because I wanted to try
+a split layout. I'm pretty happy with it but after using it for a few months
+decided I would like a few more keys. I had a look at what else was available,
+and after spending a lot of time on the internet decided that the layout of the
+<a href="https://github.com/omkbd/ErgoDash">ErgoDash</a> looked good. I liked the construction of the
+<a href="https://github.com/reversebias/mitosis-hardware">Mitosis</a> using a single PCB design for both the mounting plate and the
+actual PCB the switches are soldered to; however I didn't want a wireless
+keyboard and wanted to stick with the <a href="https://qmk.fm/">QMK</a> firmware. So I decided to adapt
+the ErgoDash design to use the Mitosis construction.</p>
+<h2 id="construction">Construction</h2>
+<p>Since I was designing my own keyboard I can tailor it to my requirements:</p>
+<ul>
+<li>Tenting built in. Just need two M6 mounting holes on the inside edge of the board</li>
+<li>Don't care about any kind of lighting</li>
+</ul>
+<p>I chose to use the diode mounting holes in the keyswitches - these are wider
+than the LED mounting holes (but in the same location on the keyswitch). They
+are in the Cherry MX <a href="http://switches-sensors.zf.com/wp-content/uploads/2012/07/Keymodule_MX_EN.pdf">datasheet</a> (found by searching around on the internet). I'm
+using <a href="https://zealpc.net/products/zealio">Zealios</a> and the ones I've got definitely have the diode holes. This
+simplified routing as the diode overlaps the switch.</p>
+<p>I created a custom component and footprint with the keyswitch, diode and cutouts
+for snapout section (for the mounting plate PCB). Added a chin at the top for
+the ProMicro, used the reversible ProMicro footprint from <a href="https://github.com/Biacco42/Ergo42">Ergo42</a>.</p>
+<p>Ordered PCBs from JLC PCB:</p>
+<p><img src="https://thomas.spurden.name/blog/custom-keyboard/keyboard-rev1-top-both.jpg" alt="Top view of both halves of the revision 1 ErgoSnap PCB" />
+<img src="https://thomas.spurden.name/blog/custom-keyboard/keyboard-rev1-side-view.jpg" alt="Side view of stacked Rev 1 ErgoSnap PCB with a couple of keyswitches" /></p>
+<p>First set of PCBs arrived and looked good, but...</p>
+<p><img src="https://thomas.spurden.name/blog/custom-keyboard/keyboard-rev1-diode-holes.jpg" alt="Closeup of keyswitch and PCB showing misaligned holes for diode legs" /></p>
+<p>the holes for the diode legs were not the right distance apart! Whoops. Luckily
+PCBs are pretty cheap so a couple of weeks later I had revised boards. Only a
+few mistakes remain now. See the <a href="https://github.com/tcrs/ergosnap">ErgoSnap</a> github repo for more info.</p>
+
+    </article>
+
+	<p><a href="https:&#x2F;&#x2F;thomas.spurden.name/">&#11152; Home</a>
+	<footer>
+		<hr>
+		<p>
+		&#169; Thomas Spurden
+		&middot; <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA &#127341;&#127343;&#127246;</a> &middot;
+		<a href="https://thomas.spurden.name/atom.xml" rel="alternate">Atom Feed</a>
+	</footer>
+</body>
+</html>
