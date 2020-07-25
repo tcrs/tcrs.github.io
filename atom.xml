@@ -74,8 +74,10 @@ dependency it doesn&#x27;t have? But this has worked fine for me for a long time
 		<updated>2019-07-18T00:00:00+00:00</updated>
 		<link href="https://thomas.spurden.name/blog/custom-keyboard/" type="text/html"/>
 		<id>https://thomas.spurden.name/blog/custom-keyboard/</id>
-		<content type="html">&lt;p&gt;I made a custom keyboard design, the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;tcrs&#x2F;ergosnap&quot;&gt;ErgoSnap&lt;&#x2F;a&gt;.
-&lt;img src=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;custom-keyboard&#x2F;ergosnap_v1.1.jpg&quot; alt=&quot;Final constructed ErgoSnap rev1.1 board&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+		<content type="html">&lt;p&gt;I made a custom keyboard design, the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;tcrs&#x2F;ergosnap&quot;&gt;ErgoSnap&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;figure&gt;
+    &lt;a href=&quot;ergosnap_v1.1.jpg&quot;&gt;&lt;img src=&quot;ergosnap_v1.1.jpg&quot; alt=&quot;Final constructed ErgoSnap rev1.1 board&quot; &#x2F;&gt;&lt;&#x2F;a&gt;
+&lt;&#x2F;figure&gt;
 &lt;h2 id=&quot;backstory&quot;&gt;Backstory&lt;&#x2F;h2&gt;
 &lt;p&gt;A while ago I built an &lt;a href=&quot;https:&#x2F;&#x2F;keeb.io&#x2F;products&#x2F;iris-keyboard-split-ergonomic-keyboard&quot;&gt;Iris keyboard&lt;&#x2F;a&gt; from a kit because I wanted to try
 a split layout. I&#x27;m pretty happy with it but after using it for a few months
@@ -101,10 +103,16 @@ simplified routing as the diode overlaps the switch.&lt;&#x2F;p&gt;
 for snapout section (for the mounting plate PCB). Added a chin at the top for
 the ProMicro, used the reversible ProMicro footprint from &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;Biacco42&#x2F;Ergo42&quot;&gt;Ergo42&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Ordered PCBs from JLC PCB:&lt;&#x2F;p&gt;
-&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;custom-keyboard&#x2F;keyboard-rev1-top-both.jpg&quot; alt=&quot;Top view of both halves of the revision 1 ErgoSnap PCB&quot; &#x2F;&gt;
-&lt;img src=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;custom-keyboard&#x2F;keyboard-rev1-side-view.jpg&quot; alt=&quot;Side view of stacked Rev 1 ErgoSnap PCB with a couple of keyswitches&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;figure&gt;
+    &lt;a href=&quot;keyboard-rev1-top-both.jpg&quot;&gt;&lt;img src=&quot;keyboard-rev1-top-both.jpg&quot; alt=&quot;Top view of both halves of the revision 1 ErgoSnap PCB&quot; &#x2F;&gt;&lt;&#x2F;a&gt;
+&lt;&#x2F;figure&gt;
+&lt;figure&gt;
+    &lt;a href=&quot;keyboard-rev1-side-view.jpg&quot;&gt;&lt;img src=&quot;keyboard-rev1-side-view.jpg&quot; alt=&quot;Side view of stacked Rev 1 ErgoSnap PCB with a couple of keyswitches&quot; &#x2F;&gt;&lt;&#x2F;a&gt;
+&lt;&#x2F;figure&gt;
 &lt;p&gt;First set of PCBs arrived and looked good, but...&lt;&#x2F;p&gt;
-&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;custom-keyboard&#x2F;keyboard-rev1-diode-holes.jpg&quot; alt=&quot;Closeup of keyswitch and PCB showing misaligned holes for diode legs&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;figure&gt;
+    &lt;a href=&quot;keyboard-rev1-diode-holes.jpg&quot;&gt;&lt;img src=&quot;keyboard-rev1-diode-holes.jpg&quot; alt=&quot;Closeup of keyswitch and PCB showing misaligned holes for diode legs&quot; &#x2F;&gt;&lt;&#x2F;a&gt;
+&lt;&#x2F;figure&gt;
 &lt;p&gt;the holes for the diode legs were not the right distance apart! Whoops. Luckily
 PCBs are pretty cheap so a couple of weeks later I had revised boards. Only a
 few mistakes remain now. See the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;tcrs&#x2F;ergosnap&quot;&gt;ErgoSnap&lt;&#x2F;a&gt; github repo for more info.&lt;&#x2F;p&gt;

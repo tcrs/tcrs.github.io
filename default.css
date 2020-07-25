@@ -11,18 +11,13 @@ body {
   }
 }
 
-body > *:first-child {
-  margin-top: 0 !important;
+figure {
+  margin: 1ex 2ex;
 }
 
-body > *:last-child {
-  margin-bottom: 0 !important;
-}
-
-code a {
-  color: #4183C4;
-  text-decoration: none;
-  background-color: aliceblue;
+figure img {
+  max-width: 100%;
+  height: auto;
 }
 
 article {
@@ -81,10 +76,6 @@ pre code {
 
 li>code, p code,h1 code,h2 code,h3 code{
   font-size:0.8em;
-}
-
-.chunk-index {
-  font-size: 80%;
 }
 
 p code,li>code,h3 code{
