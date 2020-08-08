@@ -4,8 +4,130 @@
 	<link href="https://thomas.spurden.name/atom.xml" rel="self" type="application/atom+xml"/>
 	<link href="https://thomas.spurden.name"/>
 	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2020-07-10T00:00:00+00:00</updated>
+	<updated>2020-08-08T00:00:00+00:00</updated>
 	<id>https://thomas.spurden.name/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Capturing Gameboy LCD with an FPGA</title>
+		<published>2020-08-08T00:00:00+00:00</published>
+		<updated>2020-08-08T00:00:00+00:00</updated>
+		<link href="https://thomas.spurden.name/blog/capturing-gb-lcd/" type="text/html"/>
+		<id>https://thomas.spurden.name/blog/capturing-gb-lcd/</id>
+		<content type="html">&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;capturing-gb-lcd&#x2F;title.png&quot; alt=&quot;Super Mario Land 2: 6 Golden Coins title screen&quot; &#x2F;&gt;
+&lt;img src=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;capturing-gb-lcd&#x2F;jump.png&quot; alt=&quot;Mario jumping&quot; &#x2F;&gt;
+&lt;img src=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;capturing-gb-lcd&#x2F;rock.png&quot; alt=&quot;Mario about to dodge a rock&quot; &#x2F;&gt;
+&lt;img src=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;capturing-gb-lcd&#x2F;mario_underwater.png&quot; alt=&quot;Mario underwater&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;capturing-gb-lcd&#x2F;lemmings.png&quot; alt=&quot;Lemmings title screen&quot; &#x2F;&gt;
+&lt;img src=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;capturing-gb-lcd&#x2F;mario_and_yoshi.png&quot; alt=&quot;Mario and Yoshi title screen&quot; &#x2F;&gt;
+&lt;img src=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;capturing-gb-lcd&#x2F;xenon_ii.png&quot; alt=&quot;Xenon II&quot; &#x2F;&gt;
+&lt;img src=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;capturing-gb-lcd&#x2F;mario-fly.gif&quot; alt=&quot;Mario flying&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;There are 6 important outputs from the Gameboy main processor to the LCD for
+capturing the pixels:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pixel data &lt;code&gt;D0&lt;&#x2F;code&gt; and &lt;code&gt;D1&lt;&#x2F;code&gt; (50: &lt;code&gt;LD0&lt;&#x2F;code&gt; &#x2F; &lt;code&gt;DATA0&lt;&#x2F;code&gt;, 51: &lt;code&gt;LD1&lt;&#x2F;code&gt; &#x2F; &lt;code&gt;DATA1&lt;&#x2F;code&gt;)&lt;&#x2F;li&gt;
+&lt;li&gt;Pixel clock &lt;code&gt;CLK&lt;&#x2F;code&gt; (53: &lt;code&gt;CP&lt;&#x2F;code&gt; &#x2F; &lt;code&gt;CLOCK&lt;&#x2F;code&gt;)&lt;&#x2F;li&gt;
+&lt;li&gt;Line latch &lt;code&gt;CPL&lt;&#x2F;code&gt; (55: &lt;code&gt;CPL&lt;&#x2F;code&gt; &#x2F; &lt;code&gt;DATALCH&lt;&#x2F;code&gt;)&lt;&#x2F;li&gt;
+&lt;li&gt;Horizontal sync &lt;code&gt;HSYNC&lt;&#x2F;code&gt; (54: &lt;code&gt;ST&lt;&#x2F;code&gt; &#x2F; &lt;code&gt;HORSYNC&lt;&#x2F;code&gt;)&lt;&#x2F;li&gt;
+&lt;li&gt;Vertical sync &lt;code&gt;VSYNC&lt;&#x2F;code&gt; (57: &lt;code&gt;S&lt;&#x2F;code&gt; &#x2F; &lt;code&gt;VERTSYN&lt;&#x2F;code&gt;)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;In brackets I&#x27;ve put the names and pin numbers for these signals from the
+&lt;a href=&quot;http:&#x2F;&#x2F;www.devrs.com&#x2F;gb&#x2F;files&#x2F;gameboy1.gif&quot;&gt;Gameboy schematic&lt;&#x2F;a&gt;. You can tell these are the ones required as they are the
+ones connected to the ICD2-R chip on the SGB (&lt;a href=&quot;http:&#x2F;&#x2F;www.devrs.com&#x2F;gb&#x2F;files&#x2F;sgb.gif&quot;&gt;SGB schematic&lt;&#x2F;a&gt;). Although only
+&lt;code&gt;D0&lt;&#x2F;code&gt;, &lt;code&gt;D1&lt;&#x2F;code&gt;, &lt;code&gt;CLK&lt;&#x2F;code&gt; and &lt;code&gt;CPL&lt;&#x2F;code&gt; are stricly required. &lt;&#x2F;p&gt;
+&lt;p&gt;Don&#x27;t forget that the Gameboy is 5 volt TTL: do NOT connect these directly to a
+non-5v tolerant input! I am using a &lt;a href=&quot;http:&#x2F;&#x2F;papilio.cc&#x2F;index.php?n=Papilio.PapilioPro&quot;&gt;Papilio Pro&lt;&#x2F;a&gt; FPGA development board with an
+&lt;a href=&quot;http:&#x2F;&#x2F;papilio.cc&#x2F;index.php?n=Papilio.16-bitIOBufferWing&quot;&gt;IO Buffer wing&lt;&#x2F;a&gt; to handle the logic level conversion. I have soldered an old
+IDE ribbon cable to the pins of the ribbon cable which connects the main board
+to the LCD board of the Gameboy.&lt;&#x2F;p&gt;
+&lt;figure&gt;
+    &lt;a href=&quot;gb_and_fpga.jpg&quot;&gt;&lt;img src=&quot;gb_and_fpga.jpg&quot; alt=&quot;Gameboy connected to FPGA&quot; &#x2F;&gt;&lt;&#x2F;a&gt;
+    &lt;figcaption&gt;Gameboy connected to FPGA&lt;&#x2F;figcaption&gt;
+&lt;&#x2F;figure&gt;
+&lt;p&gt;The pins to connect to are shown quite well in this image from the
+&lt;a href=&quot;http:&#x2F;&#x2F;www.flashingleds.net&#x2F;nintendOscope&#x2F;nintendoscope.html&quot;&gt;Nintendoscope&lt;&#x2F;a&gt; project:&lt;&#x2F;p&gt;
+&lt;figure&gt;
+    &lt;a href=&quot;nintendoscope_pinout.jpg&quot;&gt;&lt;img src=&quot;nintendoscope_pinout.jpg&quot; alt=&quot;LCD ribbon cable pins&quot; &#x2F;&gt;&lt;&#x2F;a&gt;
+    &lt;figcaption&gt;Original source &lt;a href=&quot;http:&#x2F;&#x2F;www.flashingleds.net&#x2F;nintendOscope&#x2F;nintendoscope.html&quot;&gt;Nintendoscope&lt;&#x2F;a&gt;&lt;&#x2F;figcaption&gt;
+&lt;&#x2F;figure&gt;
+&lt;p&gt;For testing I captured the signals using my &lt;a href=&quot;http:&#x2F;&#x2F;papilio.cc&#x2F;index.php?n=Papilio.PapilioPro&quot;&gt;Papilio Pro&lt;&#x2F;a&gt; as a logic analyser
+with the &lt;a href=&quot;http:&#x2F;&#x2F;dangerousprototypes.com&#x2F;docs&#x2F;Open_Bench_Logic_Sniffer&quot;&gt;Open Bench Logic Sniffer&lt;&#x2F;a&gt; bitfile and &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;tcrs&#x2F;sump-dump&quot;&gt;sump-dump&lt;&#x2F;a&gt;:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#fdf6e3;&quot;&gt;
+&lt;code&gt;.&#x2F;sump-dump &#x2F;dev&#x2F;ttyUSB1 groups 1 trigger 0x20=0x20 divisor 10 vcd data=0x3 vcd clk=0x4 vcd hsync=0x10 vcd vsync=0x20 vcd cpl=0x40 vcd c=0x80
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The signal buffer isn&#x27;t large enough to capture a whole frame, it can only store
+about a third of a frame.&lt;&#x2F;p&gt;
+&lt;figure&gt;
+    &lt;a href=&quot;waves-2frames.png&quot;&gt;&lt;img src=&quot;waves-2frames.png&quot; alt=&quot;Logic analyser capture of two lines of pixels&quot; &#x2F;&gt;&lt;&#x2F;a&gt;
+    &lt;figcaption&gt;First two lines of a frame (&lt;a href=&quot;6coins-title.vcd&quot;&gt;vcd&lt;&#x2F;a&gt;)&lt;&#x2F;figcaption&gt;
+&lt;&#x2F;figure&gt;
+&lt;figure&gt;
+    &lt;a href=&quot;waves-end-of-frame.png&quot;&gt;&lt;img src=&quot;waves-end-of-frame.png&quot; alt=&quot;Logic analyser capture of the end of a frame&quot; &#x2F;&gt;&lt;&#x2F;a&gt;
+    &lt;figcaption&gt;Last few lines of a frame (&lt;a href=&quot;frame-end.vcd&quot;&gt;vcd&lt;&#x2F;a&gt;)&lt;&#x2F;figcaption&gt;
+&lt;&#x2F;figure&gt;
+&lt;aside&gt;&lt;p&gt;These captures are both from the title screen of &amp;quot;Super Mario Land 2: 6 Golden
+Coins&amp;quot;&lt;&#x2F;p&gt;
+&lt;&#x2F;aside&gt;
+&lt;p&gt;The behaviour of these signals is:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Frame starts on the rising edge of &lt;code&gt;VSYNC&lt;&#x2F;code&gt;, which is held high for the first
+line of the frame.&lt;&#x2F;li&gt;
+&lt;li&gt;Each line of the frame starts on the rising edge of &lt;code&gt;HSYNC&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;Pixels are generated from left-to-right from the Gameboy CPU.&lt;&#x2F;li&gt;
+&lt;li&gt;Pixel data is shifted into a 159 pixel (159x2 bits) shift register from &lt;code&gt;D0&lt;&#x2F;code&gt;
+&amp;amp; &lt;code&gt;D1&lt;&#x2F;code&gt; on the rising edge of &lt;code&gt;CLK&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;Note that &lt;code&gt;CLK&lt;&#x2F;code&gt; does not run at a constant rate, some pixels are generated
+but the corresponding pulse of &lt;code&gt;CLK&lt;&#x2F;code&gt; is suppressed so they are discarded.
+This is how the Gameboy implements fine (1-7) pixel background and window
+offsets (and possibly other effects).&lt;&#x2F;li&gt;
+&lt;li&gt;A whole line of pixels is latched into the LCD drivers on the rising edge of
+&lt;code&gt;CPL&lt;&#x2F;code&gt;. The pixels latched are the 159 from the shift register plus the values
+from &lt;code&gt;D0&lt;&#x2F;code&gt; and &lt;code&gt;D1&lt;&#x2F;code&gt; (to make up 160 pixels). This also signals the end of each
+line, making &lt;code&gt;HSYNC&lt;&#x2F;code&gt; a bit redundant.&lt;&#x2F;li&gt;
+&lt;li&gt;At the end of each frame there are a few lines with no &lt;code&gt;CLK&lt;&#x2F;code&gt; pulses but a
+&lt;code&gt;CPL&lt;&#x2F;code&gt; pulse, these don&#x27;t have any effect on the display (as they will just
+latch exactly the same data into the LCD drivers each time). This could be
+used to detect the end of frame without having to use &lt;code&gt;VSYNC&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;In the logic captures I have looked at there is 160 rising edges of &lt;code&gt;CLK&lt;&#x2F;code&gt;, so
+the first pixel generated (which always seems to be when &lt;code&gt;HSYNC&lt;&#x2F;code&gt; is high) is
+actually discarded as it shifts off the end of the shift register before the
+row is latched into the LCD drivers.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;The pixel data changes &lt;em&gt;very&lt;&#x2F;em&gt; soon after the rising edge of &lt;code&gt;CLK&lt;&#x2F;code&gt; for the next
+pixel - so soon that to the logic analyser it appears to happen at the same time
+as the rising edge. So I actually capture the &lt;code&gt;D0&lt;&#x2F;code&gt; &amp;amp; &lt;code&gt;D1&lt;&#x2F;code&gt; values from the cycle
+&lt;em&gt;before&lt;&#x2F;em&gt; the rising edge is detected.&lt;&#x2F;p&gt;
+&lt;p&gt;Capturing &lt;code&gt;D0&lt;&#x2F;code&gt; &amp;amp; &lt;code&gt;D1&lt;&#x2F;code&gt; on the falling edge of &lt;code&gt;CLK&lt;&#x2F;code&gt; seems to be widely reported
+as the correct thing to do, but this will capture the whole frame shifted left
+by one pixel. It is definitely easier though, so if you are happy with 159
+pixels it is a decent approach.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;hardware&quot;&gt;Hardware&lt;&#x2F;h2&gt;
+&lt;p&gt;Used &lt;a href=&quot;https:&#x2F;&#x2F;m-labs.hk&#x2F;gateware&#x2F;migen&#x2F;&quot;&gt;migen&lt;&#x2F;a&gt; to build hardware, available here: &lt;a href=&quot;https:&#x2F;&#x2F;git.sr.ht&#x2F;%7Eshiny&#x2F;gbcap&quot;&gt;gbcap&lt;&#x2F;a&gt;. It&#x27;s set up to build
+for the Papilio Pro, will require some changes to build with other FPGA boards.&lt;&#x2F;p&gt;
+&lt;p&gt;This code sets up the pin assignment (from &lt;code&gt;gbcap.py&lt;&#x2F;code&gt;):&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#fdf6e3;&quot;&gt;
+&lt;code&gt; plat.add_extension([
+ (&#x27;gb_lcd&#x27;, 0,
+     Subsignal(&#x27;vsync&#x27;, Pins(&#x27;B:5&#x27;)),
+     Subsignal(&#x27;hsync&#x27;, Pins(&#x27;B:4&#x27;)),
+     Subsignal(&#x27;cpl&#x27;, Pins(&#x27;B:6&#x27;)),
+     Subsignal(&#x27;clk&#x27;, Pins(&#x27;B:2&#x27;)),
+     Subsignal(&#x27;pixel&#x27;, Pins(&#x27;B:0&#x27;, &#x27;B:1&#x27;)))])
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;i.e. &lt;code&gt;D0&lt;&#x2F;code&gt; should be connected to pin 0 of the B wing header, and so on.&lt;&#x2F;p&gt;
+&lt;p&gt;Once the bitfile is programmed onto your FPGA it will wait for a byte to be
+recieived over the UART and then start capturing frames. You can grab these
+using the &lt;code&gt;recv.py&lt;&#x2F;code&gt; script in the git repo, it will dump out pgm files.&lt;&#x2F;p&gt;
+&lt;p&gt;The UART is only running at 2Mbaud in the current design, which is not fast
+enought to stream the Gameboy frame captures in real-time (that would require
+60 * 160 * 144 * 2 = 2764800 bits per second), so you will only get a few frames
+before it stops due to FIFO overflow.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;previous-work&quot;&gt;Previous Work&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;svendahlstrand&#x2F;game-boy-lcd-sniffing&quot;&gt;lcd sniffing&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;http:&#x2F;&#x2F;www.flashingleds.net&#x2F;nintendOscope&#x2F;nintendoscope.html&quot;&gt;nintendoscope&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;http:&#x2F;&#x2F;blog.kevtris.org&#x2F;blogfiles&#x2F;Nitty%20Gritty%20Gameboy%20VRAM%20Timing.txt&quot;&gt;nitty gritty gameboy vram timing&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+	</entry>
 	<entry xml:lang="en">
 		<title>Run dhcp on all ethernet devices</title>
 		<published>2020-07-10T00:00:00+00:00</published>
