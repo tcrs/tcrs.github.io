@@ -7,7 +7,7 @@
 	<updated>2020-08-08T00:00:00+00:00</updated>
 	<id>https://thomas.spurden.name/atom.xml</id>
 	<entry xml:lang="en">
-		<title>Capturing Gameboy LCD with an FPGA</title>
+		<title>Capturing the Gameboy LCD with an FPGA</title>
 		<published>2020-08-08T00:00:00+00:00</published>
 		<updated>2020-08-08T00:00:00+00:00</updated>
 		<link href="https://thomas.spurden.name/blog/capturing-gb-lcd/" type="text/html"/>
@@ -32,7 +32,7 @@ capturing the pixels:&lt;&#x2F;p&gt;
 &lt;p&gt;In brackets I&#x27;ve put the names and pin numbers for these signals from the
 &lt;a href=&quot;http:&#x2F;&#x2F;www.devrs.com&#x2F;gb&#x2F;files&#x2F;gameboy1.gif&quot;&gt;Gameboy schematic&lt;&#x2F;a&gt;. You can tell these are the ones required as they are the
 ones connected to the ICD2-R chip on the SGB (&lt;a href=&quot;http:&#x2F;&#x2F;www.devrs.com&#x2F;gb&#x2F;files&#x2F;sgb.gif&quot;&gt;SGB schematic&lt;&#x2F;a&gt;). Although only
-&lt;code&gt;D0&lt;&#x2F;code&gt;, &lt;code&gt;D1&lt;&#x2F;code&gt;, &lt;code&gt;CLK&lt;&#x2F;code&gt; and &lt;code&gt;CPL&lt;&#x2F;code&gt; are stricly required. &lt;&#x2F;p&gt;
+&lt;code&gt;D0&lt;&#x2F;code&gt;, &lt;code&gt;D1&lt;&#x2F;code&gt;, &lt;code&gt;CLK&lt;&#x2F;code&gt; and &lt;code&gt;CPL&lt;&#x2F;code&gt; are strictly required. &lt;&#x2F;p&gt;
 &lt;p&gt;Don&#x27;t forget that the Gameboy is 5 volt TTL: do NOT connect these directly to a
 non-5v tolerant input! I am using a &lt;a href=&quot;http:&#x2F;&#x2F;papilio.cc&#x2F;index.php?n=Papilio.PapilioPro&quot;&gt;Papilio Pro&lt;&#x2F;a&gt; FPGA development board with an
 &lt;a href=&quot;http:&#x2F;&#x2F;papilio.cc&#x2F;index.php?n=Papilio.16-bitIOBufferWing&quot;&gt;IO Buffer wing&lt;&#x2F;a&gt; to handle the logic level conversion. I have soldered an old
@@ -114,10 +114,10 @@ for the Papilio Pro, will require some changes to build with other FPGA boards.&
 &lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;i.e. &lt;code&gt;D0&lt;&#x2F;code&gt; should be connected to pin 0 of the B wing header, and so on.&lt;&#x2F;p&gt;
 &lt;p&gt;Once the bitfile is programmed onto your FPGA it will wait for a byte to be
-recieived over the UART and then start capturing frames. You can grab these
+received over the UART and then start capturing frames. You can grab these
 using the &lt;code&gt;recv.py&lt;&#x2F;code&gt; script in the git repo, it will dump out pgm files.&lt;&#x2F;p&gt;
 &lt;p&gt;The UART is only running at 2Mbaud in the current design, which is not fast
-enought to stream the Gameboy frame captures in real-time (that would require
+enough to stream the Gameboy frame captures in real-time (that would require
 60 * 160 * 144 * 2 = 2764800 bits per second), so you will only get a few frames
 before it stops due to FIFO overflow.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;previous-work&quot;&gt;Previous Work&lt;&#x2F;h3&gt;
