@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Capturing the Gameboy LCD with an FPGA (Part 2) - Compression</title>
+    <link rel="icon" type="image/png" href="https://thomas.spurden.name/favicon.png">
+    <link rel="stylesheet" href="/default.css">
+
+    <meta name="generator" content="zola" />
+    <meta name="author" content="Thomas Spurden" />
+</head>
+<body>
+    <header>
+        <nav>
+	    <a href="https:&#x2F;&#x2F;thomas.spurden.name/">&#8617; Home</a>
+	    &middot; <a href="https://github.com/tcrs">GitHub</a>
+	    &middot; <a href="https://git.sr.ht/~shiny">Sourcehut</a>
+	    &middot; <a href="https://thomas.spurden.name/atom.xml">Atom Feed</a>
+	    &middot;
+        </nav>
+    </header>
+	<hr>
+	
+    <article>
+    <h1>Capturing the Gameboy LCD with an FPGA (Part 2) - Compression</h1>
+    <p><img src="https://thomas.spurden.name/blog/capturing-gb-lcd-part2/mario-intro.gif" alt="Mario" /></p>
+<aside><p>This GIF is about 16% too slow (50fps, should be 60fps) due to the low precision of the gif
+frame duration.</p>
+</aside>
+<p>In <a href="https://thomas.spurden.name/blog/capturing-gb-lcd/">Part 1</a> I explain how to capture the
+pixels being sent from the Gameboy GPU to the LCD. The FPGA board I'm using
+(<a href="http://papilio.cc/index.php?n=Papilio.PapilioPro">Papilio Pro</a>) is sending the captured data back to the PC via 2Mbaud serial
+(over USB). This isn't fast enough to stream frames in real time so only a about
+15 frames would be captured and transmitted before the buffer on the FPGA
+overflowed.</p>
+<p>So I implemented a simple lossless compressor to reduce the required data rate.
+The compressor is line-based: it chooses a reference line from the previous
+frame and only transmits the differences between that reference line and the
+current line. This introduces a fixed overhead of one byte per line to encode
+the location of the reference line and how the differences are encoded. But
+generally the lines are compressed by much more than one byte!</p>
+<p>See the <a href="https://git.sr.ht/%7Eshiny/gbcap">gbcap</a> project for the code!</p>
+<h2 id="compression-details">Compression details</h2>
+<p>The compressor can encode offsets in x &amp; y between -4 and 4 pixels. This allows
+the reference line to be between 4 lines above and 4 lines below the line being
+compressed in the previous frame. It also allows the reference line to be
+shifted left or right by up to 4 pixels (0 pixels are shifted in to fill the
+gap).</p>
+<p>A per-line prefix byte determines the encoding used for the line, of which there
+are three:</p>
+<ul>
+<li>A prefix byte of <code>0xFF</code> means the line could not be compressed, there is no
+reference line and the next 40 bytes are the line data verbatim</li>
+</ul>
+<p>Otherwise the 7 least-significant bits of the prefix byte encode the offset of
+the reference line, and the most-significant bit encodes whether the match is
+exact. The offset is encoded in the range 0..89 (so these two encodings do not
+overlap with the <code>0xFF</code> encoding) by biasing both offsets by 4 to place them
+in the range 0..9, multiplying the x offset by 9 and adding the y offset (that
+is: ((x + 4) * 9) + (y + 4)).</p>
+<ul>
+<li>
+<p>For an exact match (most-significant bit is set) the reference line is output
+verbatim.</p>
+</li>
+<li>
+<p>For a non-exact match (most-significant bit is not set) the prefix byte is
+followed by a 5-byte bitmask which encodes which of the 40 bytes of the
+reference line should be output. For every 0 in the mask a byte is read from the
+compressed stream and output, for every 1 in the mask a byte is read from the
+reference line and output.</p>
+</li>
+</ul>
+<p>The compressor selects the reference line with the highest number of matches. If
+there aren't any reference lines with more than 5 matching bytes then the
+compressor will output a no-match (<code>0xFF</code> prefix) line as that consumes fewer
+bytes than transmitting the mask and non-matching bytes in that case.</p>
+
+    </article>
+
+	<p><a href="https:&#x2F;&#x2F;thomas.spurden.name/">&#8617; Home</a>
+	<footer>
+		<hr>
+		<p>
+		&#169; Thomas Spurden
+		&middot; <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA</a> &middot;
+		<a href="https://thomas.spurden.name/atom.xml" rel="alternate">Atom Feed</a>
+	</footer>
+</body>
+</html>

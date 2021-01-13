@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Capturing the Gameboy LCD with an FPGA</title>
+    <title>Capturing the Gameboy LCD with an FPGA (Part 1)</title>
     <link rel="icon" type="image/png" href="https://thomas.spurden.name/favicon.png">
     <link rel="stylesheet" href="/default.css">
 
@@ -23,7 +23,7 @@
 	<hr>
 	
     <article>
-    <h1>Capturing the Gameboy LCD with an FPGA</h1>
+    <h1>Capturing the Gameboy LCD with an FPGA (Part 1)</h1>
     <p><img src="https://thomas.spurden.name/blog/capturing-gb-lcd/title.png" alt="Super Mario Land 2: 6 Golden Coins title screen" />
 <img src="https://thomas.spurden.name/blog/capturing-gb-lcd/jump.png" alt="Mario jumping" />
 <img src="https://thomas.spurden.name/blog/capturing-gb-lcd/rock.png" alt="Mario about to dodge a rock" />
@@ -32,6 +32,7 @@
 <img src="https://thomas.spurden.name/blog/capturing-gb-lcd/mario_and_yoshi.png" alt="Mario and Yoshi title screen" />
 <img src="https://thomas.spurden.name/blog/capturing-gb-lcd/xenon_ii.png" alt="Xenon II" />
 <img src="https://thomas.spurden.name/blog/capturing-gb-lcd/mario-fly.gif" alt="Mario flying" /></p>
+<p>Update: see also <a href="https://thomas.spurden.name/blog/capturing-gb-lcd-part2/">Part 2</a>.</p>
 <p>There are 6 important outputs from the Gameboy main processor to the LCD for
 capturing the pixels:</p>
 <ul>
@@ -131,7 +132,8 @@ using the <code>recv.py</code> script in the git repo, it will dump out pgm file
 <p>The UART is only running at 2Mbaud in the current design, which is not fast
 enough to stream the Gameboy frame captures in real-time (that would require
 60 * 160 * 144 * 2 = 2764800 bits per second), so you will only get a few frames
-before it stops due to FIFO overflow.</p>
+before it stops due to FIFO overflow. <strong>Update: I now have real-time streaming,
+see <a href="https://thomas.spurden.name/blog/capturing-gb-lcd-part2/">Part 2</a></strong>.</p>
 <h3 id="previous-work">Previous Work</h3>
 <ul>
 <li><a href="https://github.com/svendahlstrand/game-boy-lcd-sniffing">lcd sniffing</a></li>

@@ -2,12 +2,72 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
 	<title>Thomas Spurden&#x27;s blog</title>
 	<link href="https://thomas.spurden.name/atom.xml" rel="self" type="application/atom+xml"/>
-	<link href="https://thomas.spurden.name"/>
+  <link href="https://thomas.spurden.name"/>
 	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2020-08-08T00:00:00+00:00</updated>
+	<updated>2021-01-09T00:00:00+00:00</updated>
 	<id>https://thomas.spurden.name/atom.xml</id>
 	<entry xml:lang="en">
-		<title>Capturing the Gameboy LCD with an FPGA</title>
+		<title>Capturing the Gameboy LCD with an FPGA (Part 2) - Compression</title>
+		<published>2021-01-09T00:00:00+00:00</published>
+		<updated>2021-01-09T00:00:00+00:00</updated>
+		<link href="https://thomas.spurden.name/blog/capturing-gb-lcd-part2/" type="text/html"/>
+		<id>https://thomas.spurden.name/blog/capturing-gb-lcd-part2/</id>
+		<content type="html">&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;capturing-gb-lcd-part2&#x2F;mario-intro.gif&quot; alt=&quot;Mario&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;aside&gt;&lt;p&gt;This GIF is about 16% too slow (50fps, should be 60fps) due to the low precision of the gif
+frame duration.&lt;&#x2F;p&gt;
+&lt;&#x2F;aside&gt;
+&lt;p&gt;In &lt;a href=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;capturing-gb-lcd&#x2F;&quot;&gt;Part 1&lt;&#x2F;a&gt; I explain how to capture the
+pixels being sent from the Gameboy GPU to the LCD. The FPGA board I&#x27;m using
+(&lt;a href=&quot;http:&#x2F;&#x2F;papilio.cc&#x2F;index.php?n=Papilio.PapilioPro&quot;&gt;Papilio Pro&lt;&#x2F;a&gt;) is sending the captured data back to the PC via 2Mbaud serial
+(over USB). This isn&#x27;t fast enough to stream frames in real time so only a about
+15 frames would be captured and transmitted before the buffer on the FPGA
+overflowed.&lt;&#x2F;p&gt;
+&lt;p&gt;So I implemented a simple lossless compressor to reduce the required data rate.
+The compressor is line-based: it chooses a reference line from the previous
+frame and only transmits the differences between that reference line and the
+current line. This introduces a fixed overhead of one byte per line to encode
+the location of the reference line and how the differences are encoded. But
+generally the lines are compressed by much more than one byte!&lt;&#x2F;p&gt;
+&lt;p&gt;See the &lt;a href=&quot;https:&#x2F;&#x2F;git.sr.ht&#x2F;%7Eshiny&#x2F;gbcap&quot;&gt;gbcap&lt;&#x2F;a&gt; project for the code!&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;compression-details&quot;&gt;Compression details&lt;&#x2F;h2&gt;
+&lt;p&gt;The compressor can encode offsets in x &amp;amp; y between -4 and 4 pixels. This allows
+the reference line to be between 4 lines above and 4 lines below the line being
+compressed in the previous frame. It also allows the reference line to be
+shifted left or right by up to 4 pixels (0 pixels are shifted in to fill the
+gap).&lt;&#x2F;p&gt;
+&lt;p&gt;A per-line prefix byte determines the encoding used for the line, of which there
+are three:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;A prefix byte of &lt;code&gt;0xFF&lt;&#x2F;code&gt; means the line could not be compressed, there is no
+reference line and the next 40 bytes are the line data verbatim&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Otherwise the 7 least-significant bits of the prefix byte encode the offset of
+the reference line, and the most-significant bit encodes whether the match is
+exact. The offset is encoded in the range 0..89 (so these two encodings do not
+overlap with the &lt;code&gt;0xFF&lt;&#x2F;code&gt; encoding) by biasing both offsets by 4 to place them
+in the range 0..9, multiplying the x offset by 9 and adding the y offset (that
+is: ((x + 4) * 9) + (y + 4)).&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;For an exact match (most-significant bit is set) the reference line is output
+verbatim.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;For a non-exact match (most-significant bit is not set) the prefix byte is
+followed by a 5-byte bitmask which encodes which of the 40 bytes of the
+reference line should be output. For every 0 in the mask a byte is read from the
+compressed stream and output, for every 1 in the mask a byte is read from the
+reference line and output.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;The compressor selects the reference line with the highest number of matches. If
+there aren&#x27;t any reference lines with more than 5 matching bytes then the
+compressor will output a no-match (&lt;code&gt;0xFF&lt;&#x2F;code&gt; prefix) line as that consumes fewer
+bytes than transmitting the mask and non-matching bytes in that case.&lt;&#x2F;p&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Capturing the Gameboy LCD with an FPGA (Part 1)</title>
 		<published>2020-08-08T00:00:00+00:00</published>
 		<updated>2020-08-08T00:00:00+00:00</updated>
 		<link href="https://thomas.spurden.name/blog/capturing-gb-lcd/" type="text/html"/>
@@ -20,6 +80,7 @@
 &lt;img src=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;capturing-gb-lcd&#x2F;mario_and_yoshi.png&quot; alt=&quot;Mario and Yoshi title screen&quot; &#x2F;&gt;
 &lt;img src=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;capturing-gb-lcd&#x2F;xenon_ii.png&quot; alt=&quot;Xenon II&quot; &#x2F;&gt;
 &lt;img src=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;capturing-gb-lcd&#x2F;mario-fly.gif&quot; alt=&quot;Mario flying&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Update: see also &lt;a href=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;capturing-gb-lcd-part2&#x2F;&quot;&gt;Part 2&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;There are 6 important outputs from the Gameboy main processor to the LCD for
 capturing the pixels:&lt;&#x2F;p&gt;
 &lt;ul&gt;
@@ -119,7 +180,8 @@ using the &lt;code&gt;recv.py&lt;&#x2F;code&gt; script in the git repo, it will 
 &lt;p&gt;The UART is only running at 2Mbaud in the current design, which is not fast
 enough to stream the Gameboy frame captures in real-time (that would require
 60 * 160 * 144 * 2 = 2764800 bits per second), so you will only get a few frames
-before it stops due to FIFO overflow.&lt;&#x2F;p&gt;
+before it stops due to FIFO overflow. &lt;strong&gt;Update: I now have real-time streaming,
+see &lt;a href=&quot;https:&#x2F;&#x2F;thomas.spurden.name&#x2F;blog&#x2F;capturing-gb-lcd-part2&#x2F;&quot;&gt;Part 2&lt;&#x2F;a&gt;&lt;&#x2F;strong&gt;.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;previous-work&quot;&gt;Previous Work&lt;&#x2F;h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;svendahlstrand&#x2F;game-boy-lcd-sniffing&quot;&gt;lcd sniffing&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
@@ -199,6 +261,7 @@ dependency it doesn&#x27;t have? But this has worked fine for me for a long time
 		<content type="html">&lt;p&gt;I made a custom keyboard design, the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;tcrs&#x2F;ergosnap&quot;&gt;ErgoSnap&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
 &lt;figure&gt;
     &lt;a href=&quot;ergosnap_v1.1.jpg&quot;&gt;&lt;img src=&quot;ergosnap_v1.1.jpg&quot; alt=&quot;Final constructed ErgoSnap rev1.1 board&quot; &#x2F;&gt;&lt;&#x2F;a&gt;
+    
 &lt;&#x2F;figure&gt;
 &lt;h2 id=&quot;backstory&quot;&gt;Backstory&lt;&#x2F;h2&gt;
 &lt;p&gt;A while ago I built an &lt;a href=&quot;https:&#x2F;&#x2F;keeb.io&#x2F;products&#x2F;iris-keyboard-split-ergonomic-keyboard&quot;&gt;Iris keyboard&lt;&#x2F;a&gt; from a kit because I wanted to try
@@ -227,13 +290,16 @@ the ProMicro, used the reversible ProMicro footprint from &lt;a href=&quot;https
 &lt;p&gt;Ordered PCBs from JLC PCB:&lt;&#x2F;p&gt;
 &lt;figure&gt;
     &lt;a href=&quot;keyboard-rev1-top-both.jpg&quot;&gt;&lt;img src=&quot;keyboard-rev1-top-both.jpg&quot; alt=&quot;Top view of both halves of the revision 1 ErgoSnap PCB&quot; &#x2F;&gt;&lt;&#x2F;a&gt;
+    
 &lt;&#x2F;figure&gt;
 &lt;figure&gt;
     &lt;a href=&quot;keyboard-rev1-side-view.jpg&quot;&gt;&lt;img src=&quot;keyboard-rev1-side-view.jpg&quot; alt=&quot;Side view of stacked Rev 1 ErgoSnap PCB with a couple of keyswitches&quot; &#x2F;&gt;&lt;&#x2F;a&gt;
+    
 &lt;&#x2F;figure&gt;
 &lt;p&gt;First set of PCBs arrived and looked good, but...&lt;&#x2F;p&gt;
 &lt;figure&gt;
     &lt;a href=&quot;keyboard-rev1-diode-holes.jpg&quot;&gt;&lt;img src=&quot;keyboard-rev1-diode-holes.jpg&quot; alt=&quot;Closeup of keyswitch and PCB showing misaligned holes for diode legs&quot; &#x2F;&gt;&lt;&#x2F;a&gt;
+    
 &lt;&#x2F;figure&gt;
 &lt;p&gt;the holes for the diode legs were not the right distance apart! Whoops. Luckily
 PCBs are pretty cheap so a couple of weeks later I had revised boards. Only a
